@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="appointment.css" />
+  <title>Appointment</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCo0WKrqX7PGMGtIIKa-beozu5qScst-KI",
+      authDomain: "appointment-49e57.firebaseapp.com",
+      projectId: "appointment-49e57",
+      storageBucket: "appointment-49e57.firebasestorage.app",
+      messagingSenderId: "954473997609",
+      appId: "1:954473997609:web:96922f03cf2fa6b79ec338",
+      databaseURL: "https://appointment-49e57-default-rtdb.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+  </script>
+</head>
+<body>
+  <section class="container">
+    <header>Appointment</header>
+    <form id="appointmentForm">
+      <div class="input-box">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter full name" required />
+      </div>
+      <div class="input-box">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Enter email address" required />
+      </div>
+      <div class="column">
+        <div class="input-box">
+          <label>Phone Number</label>
+          <input type="text" name="phone" placeholder="Enter phone number" required />
+        </div>
+        <div class="input-box">
+          <label>Select Date</label>
+          <input type="date" name="date" id="appointmentDate" required />
+        </div>
+      </div>
+
+      <div class="gender-box">
+        <h3>Gender</h3>
+        <div class="gender-option">
+          <div class="gender">
+            <input type="radio" id="check-male" name="gender" value="Male" checked />
+            <label for="check-male">Male</label>
+          </div>
+          <div class="gender">
+            <input type="radio" id="check-female" name="gender" value="Female" />
+            <label for="check-female">Female</label>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label>Select Doctor</label>
+          <select name="doctor" required>
+            <option hidden>Select a Doctor</option>
+            <option>Mahnoor Saeed Khan</option>
+            <option>Taimur Ahmad</option>
+            <option>Momal Shakoor</option>
+            <option>Sadaf Raza</option>
+          </select>
+        </div>
+
+        <h3>Session Type</h3>
+        <div class="gender-option">
+          <div class="gender">
+            <input type="radio" id="single" name="sessionType" value="Single Person" checked />
+            <label for="single">Single Person</label>
+          </div>
+          <div class="gender">
+            <input type="radio" id="couple" name="sessionType" value="Couple Session" />
+            <label for="couple">Couple Session</label>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label>Preferred Session Time</label>
+          <select name="time" id="sessionTime" required>
+            <option hidden>Select Time</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+          </select>
+        </div>
+
+        <div class="input-box">
+          <label>Select Service</label>
+          <select name="service" required>
+            <option hidden>Choose Service</option>
+            <option>Mental Care</option>
+            <option>Relationship</option>
+            <option>Social Life</option>
+            <option>Parenting</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-box address">
+        <div class="column">
+          <div class="select-box">
+            <select name="country" required>
+              <option hidden>Country</option>
+              <option>Pakistan</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>United Arab Emirates</option>
+              <option>Saudi Arabia</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>India</option>
+              <option>China</option>
+              <option>Japan</option>
+              <option>South Korea</option>
+              <option>Turkey</option>
+              <option>Malaysia</option>
+              <option>Singapore</option>
+              <option>South Africa</option>
+              <option>Italy</option>
+              <option>Spain</option>
+              <option>Brazil</option>
+            </select>
+          </div>
+          <input type="text" name="city" placeholder="Enter your city" required />
+        </div>
+      </div>
+
+      <!-- Payment Details Section -->
+      <div class="payment-details" style="margin-top: 20px; font-size: 15px; color: #333; line-height: 1.6;">
+        <strong>● HBL</strong><br>
+        Account Detail: <strong>23017902453399</strong><br>
+        IBAN: <strong>PK44HABB0023017902453399</strong><br>
+        Account Title: <strong>Mahnoor Fatima</strong><br><br>
+        <em>To book your session, please confirm your slot through payment in advance.</em><br>
+        <strong>Your slot will only be secured after payment.</strong><br>
+        <span style="color: rgb(210, 160, 160);">Last-minute changes or delay will <u>NOT</u> be accepted.</span>
+      </div>
+
+      <button type="submit">Submit Appointment</button>
+    </form>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("appointmentForm");
+      const dateField = document.getElementById("appointmentDate");
+
+      // Block Sundays
+      dateField.addEventListener("change", function () {
+        const selectedDay = new Date(this.value).getDay();
+        if (selectedDay === 0) {
+          alert("⚠️ Sunday is off. Please select another day.");
+          this.value = "";
+          this.focus();
+          return;
+        }
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const date = form.date.value;
+        const gender = form.gender.value;
+        const doctor = form.doctor.value;
+        const sessionType = form.sessionType.value;
+        const time = form.time.value;
+        const service = form.service.value;
+        const country = form.country.value;
+        const city = form.city.value;
+
+        const whatsappMessage = `
+New Appointment Detail:
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Date: ${date}
+Gender: ${gender}
+Doctor: ${doctor}
+Session Type: ${sessionType}
+Time: ${time}
+Service: ${service}
+Location: ${city}, ${country}
+        `;
+
+        // First submit to FormSubmit
+        fetch("https://formsubmit.co/ajax/icii.clouds@email.com", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            Name: name,
+            Email: email,
+            Phone: phone,
+            Date: date,
+            Gender: gender,
+            Doctor: doctor,
+            SessionType: sessionType,
+            Time: time,
+            Service: service,
+            Country: country,
+            City: city
+          })
+        })
+        .then(res => res.json())
+        .then(() => {
+          alert("✅ Appointment submitted successfully!");
+          const whatsappURL = `https://api.whatsapp.com/send?phone=923305516653&text=${encodeURIComponent(whatsappMessage)}`;
+          window.open(whatsappURL, "_blank");
+          form.reset();
+        })
+        .catch(error => {
+          alert("❌ Error submitting form. Please try again.");
+          console.error(error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

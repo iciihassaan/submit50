@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="event.css" />
+  <title>Registration Form</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCo0WKrqX7PGMGtIIKa-beozu5qScst-KI",
+      authDomain: "appointment-49e57.firebaseapp.com",
+      projectId: "appointment-49e57",
+      storageBucket: "appointment-49e57.firebasestorage.app",
+      messagingSenderId: "954473997609",
+      appId: "1:954473997609:web:96922f03cf2fa6b79ec338",
+      databaseURL: "https://appointment-49e57-default-rtdb.firebaseio.com"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+  </script>
+</head>
+<body>
+  <section class="container">
+    <header>Registration Form</header>
+    <form id="appointmentForm">
+      <div class="input-box">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter full name" required />
+      </div>
+      <div class="input-box">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Enter email address" required />
+      </div>
+      <div class="column">
+        <div class="input-box">
+          <label>Phone Number</label>
+          <input type="text" name="phone" placeholder="Enter phone number" required />
+        </div>
+        <div class="gender-box">
+          <h3>Gender</h3>
+          <div class="gender-option">
+            <div class="gender">
+              <input type="radio" id="check-male" name="gender" value="Male" checked />
+              <label for="check-male">Male</label>
+            </div>
+            <div class="gender">
+              <input type="radio" id="check-female" name="gender" value="Female" />
+              <label for="check-female">Female</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label>Service</label>
+          <input type="hidden" name="service" value="Healing Circle">
+          <input type="text" value="Healing Circle" disabled style="font-family: inherit; font-size: inherit; background-color: #f0f0f0; border: none; padding: 8px; margin-top: 5px;" />
+        </div>
+      </div>
+
+      <div class="input-box address">
+        <div class="column">
+          <div class="select-box">
+            <select name="country" required>
+              <option hidden>Country</option>
+              <option>Pakistan</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>United Arab Emirates</option>
+              <option>Saudi Arabia</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>India</option>
+              <option>China</option>
+              <option>Japan</option>
+              <option>South Korea</option>
+              <option>Turkey</option>
+              <option>Malaysia</option>
+              <option>Singapore</option>
+              <option>South Africa</option>
+              <option>Italy</option>
+              <option>Spain</option>
+              <option>Brazil</option>
+            </select>
+          </div>
+          <input type="text" name="city" placeholder="Enter your city" required />
+        </div>
+      </div>
+
+      <button type="submit">Submit Appointment</button>
+    </form>
+  </section>
+
+  <script>
+    const form = document.getElementById("appointmentForm");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = form.name.value;
+      const email = form.email.value;
+      const phone = form.phone.value;
+      const gender = form.gender.value;
+      const service = form.service.value;
+      const country = form.country.value;
+      const city = form.city.value;
+
+      const whatsappMessage = `
+Healing Circle:
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Gender: ${gender}
+Service: ${service}
+Location: ${city}, ${country}
+      `;
+
+      // Submit to FormSubmit
+      fetch("https://formsubmit.co/ajax/icii.clouds@email.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          Name: name,
+          Email: email,
+          Phone: phone,
+          Gender: gender,
+          Service: service,
+          Country: country,
+          City: city
+        })
+      })
+      .then(res => res.json())
+      .then(() => {
+        alert("✅ Appointment submitted successfully!");
+        const whatsappURL = `https://api.whatsapp.com/send?phone=923305516653&text=${encodeURIComponent(whatsappMessage)}`;
+        window.open(whatsappURL, "_blank");
+        form.reset();
+      })
+      .catch(error => {
+        alert("❌ Error submitting form. Please try again.");
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>

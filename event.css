@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(to right, #aba9b6, #a084f7);
+}
+
+.container {
+  max-width: 720px;
+  width: 100%;
+  background: #fff;
+  padding: 35px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.container header {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+form {
+  width: 100%;
+}
+
+.input-box,
+.select-box,
+textarea {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-box label,
+.select-box label {
+  color: #333;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.input-box input,
+.select-box select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  color: #555;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #fafafa;
+}
+
+.input-box input:focus,
+.select-box select:focus,
+textarea:focus {
+  border-color: #816af6;
+  box-shadow: 0 0 0 3px rgba(130, 106, 251, 0.2);
+  background-color: #fff;
+}
+
+.column {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.column .input-box,
+.column .select-box {
+  flex: 1;
+  min-width: 200px;
+}
+
+.gender-box {
+  margin-top: 25px;
+}
+
+.gender-box h3 {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gender input[type="radio"] {
+  accent-color: #816af6;
+  cursor: pointer;
+}
+
+.gender label {
+  color: #555;
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  height: 50px;
+  width: 100%;
+  background: #816af6;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 35px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #6a55e0;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    flex-direction: column;
+  }
+
+  .gender-option {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+.select-box select,
+.input-box select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  background-color: #fafafa;
+  color: #555;
+  transition: 0.3s ease;
+  appearance: none; /* Removes default arrow on Chrome/Safari */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%225%22%20viewBox%3D%220%200%2010%205%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%205%205-5z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 1rem top 50%;
+  background-size: 10px;
+}
+
+.input-box select:focus,
+.select-box select:focus {
+  border-color: #816af6;
+  box-shadow: 0 0 0 3px rgba(130, 106, 251, 0.2);
+  background-color: #fff;
+}
